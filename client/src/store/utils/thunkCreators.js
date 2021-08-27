@@ -121,7 +121,7 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
 
 export const readMessages = (conversation) => async (dispatch) => {
   try {
-    const { data } = await axios.patch('/api/conversations/', { conversationId: conversation.id });
+    const { data } = await axios.patch('/api/conversations/', { conversationId: conversation.id, otherUserId: conversation.otherUser.id });
     console.log("data", data);
     dispatch(setMessagesRead(data.conversation));
   } catch (error) {
