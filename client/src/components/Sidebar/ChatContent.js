@@ -36,6 +36,11 @@ const ChatContent = (props) => {
           {latestMessageText}
         </Typography>
       </Box>
+      {conversation.unreadMessages > 0 &&
+      <Box style={{marginRight: 20, marginTop: 10}}>
+        {conversation.unreadMessages}
+      </Box>
+      }
     </Box>
   );
 };

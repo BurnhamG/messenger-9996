@@ -67,6 +67,8 @@ router.get("/", async (req, res, next) => {
         convoJSON.otherUser.online = false;
       }
 
+      convoJSON.unreadMessages = convoJSON.messages.filter((message) => !message.isRead).length;
+
       // reverse messages so the most recent message is last in the array
       convoJSON.messages.reverse();
 
@@ -80,5 +82,43 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
+
+// expects { conversationId, isRead } in body
+router.patch("/", async (req, res, next) => {
+  try {
+    if (!req.user) {
+      return res.sendStatus(401);
+    }
+    console.log(req.body);
+    const { conversationId, isRead } = req.body;
+    const conversation = await Conversation.findOne({
+      where: {
+        id: conversationId
+      },
+      include: [
+        { model: Message },
+      ]
+    });
+
+    const results = [];
+    console.log(conversation.messages);
+    for (const message of conversation.messages) {
+      const result = await Message.update( {isRead: isRead }, {
+        where: {
+          id: message.id
+        }
+      });
+      results.push(result);
+    }
+
+    success = results.every(r => r === 1);
+
+    res.json({ conversation });
+
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 module.exports = router;
