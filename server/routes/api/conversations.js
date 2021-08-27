@@ -83,14 +83,14 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// expects { conversationId, isRead } in body
+// expects { conversationId } in body
 router.patch("/", async (req, res, next) => {
   try {
     if (!req.user) {
       return res.sendStatus(401);
     }
     console.log(req.body);
-    const { conversationId, isRead } = req.body;
+    const { conversationId } = req.body;
     const conversation = await Conversation.findOne({
       where: {
         id: conversationId
@@ -103,7 +103,7 @@ router.patch("/", async (req, res, next) => {
     const results = [];
     console.log(conversation.messages);
     for (const message of conversation.messages) {
-      const result = await Message.update( {isRead: isRead }, {
+      const result = await Message.update( {isRead: true }, {
         where: {
           id: message.id
         }
