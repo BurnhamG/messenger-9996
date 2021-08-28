@@ -8,11 +8,16 @@ const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-end"
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
   },
+  avatar: {
+    width: 20,
+    height: 20
+  }
 }));
 
-const isLastRead = (messages, messageId) => {
+const isLastRead = (messages, messageId, userId) => {
   for (let index = messages.length - 1; index >= 0; index--) {
     if (messages[index].isRead && messages[index].id === messageId) {
       return true;
@@ -34,8 +39,10 @@ const Messages = (props) => {
         return message.senderId === userId ? (
           <>
             <SenderBubble key={message.id} text={message.text} time={time} />
-            {isLastRead(messages, message.id) &&
-              <Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.root} ></Avatar> 
+            {isLastRead(messages.filter((message) => message.senderId === userId), message.id, userId) &&
+            <Box className={classes.root}>
+              <Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar} ></Avatar> 
+            </Box>
             }
           </>
         ) : (
