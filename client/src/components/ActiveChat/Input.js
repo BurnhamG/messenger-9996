@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FormControl, FilledInput } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { postMessage } from "../../store/utils/thunkCreators";
+import { postMessage, readMessages } from "../../store/utils/thunkCreators";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,6 +25,11 @@ const Input = (props) => {
   const handleChange = (event) => {
     setText(event.target.value);
   };
+
+  const handleClick = async (conversationId, otherUserId) => {
+    await props.readMessages(conversationId, otherUserId);
+  }
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,6 +54,7 @@ const Input = (props) => {
           value={text}
           name="text"
           onChange={handleChange}
+          onClick={() => handleClick(conversationId, otherUser.id)}
         />
       </FormControl>
     </form>
@@ -59,6 +65,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     postMessage: (message) => {
       dispatch(postMessage(message));
+    },
+    readMessages : (conversationId, otherUserId) => {
+      dispatch(readMessages(conversationId, otherUserId));
     },
   };
 };

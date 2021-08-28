@@ -119,13 +119,13 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
   }
 };
 
-export const readMessages = (conversation) => async (dispatch) => {
+export const readMessages = (conversationId, otherUserId) => async (dispatch) => {
   try {
-    const { data } = await axios.patch('/api/conversations/', { conversationId: conversation.id, otherUserId: conversation.otherUser.id });
-    dispatch(setMessagesRead(data.conversation, conversation.otherUser.id));
+    const { data } = await axios.patch('/api/conversations/', { conversationId: conversationId, otherUserId: otherUserId});
+    dispatch(setMessagesRead(data.conversation, otherUserId));
     socket.emit("conversation-read", {
-      conversation: conversation,
-      senderId: conversation.otherUser.id,
+      conversation: data.conversation,
+      senderId: otherUserId,
     });
   } catch (error) {
     console.error(error);
