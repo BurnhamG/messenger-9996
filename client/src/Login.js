@@ -10,7 +10,7 @@ import {
   TextField,
   InputAdornment,
   IconButton,
-  Link
+  Link,
 } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -25,7 +25,7 @@ const Login = (props) => {
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
-    password: '',
+    password: "",
     showPassword: false,
   });
 
@@ -58,17 +58,38 @@ const Login = (props) => {
       <Grid item xs={3} sm={0}>
         <WelcomeSideBanner style={{ height: "100vh" }} />
       </Grid>
-      <Grid container direction="column" justifyContent="space-around" sm={12} md={9} style={{height: "100vh"}}>
+      <Grid
+        container
+        direction="column"
+        justifyContent="space-around"
+        sm={12}
+        md={9}
+        style={{ height: "100vh" }}
+      >
         <Grid container item className={classes.header}>
-          <Typography className={classes.accountCreation}>Don't have an account?</Typography>
-          <Button variant="contained" size="large" className={`${classes.accountCreation} ${classes.button}`} onClick={() => history.push("/register")}>Create account</Button>
+          <Typography className={classes.accountCreation}>
+            Don't have an account?
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            className={`${classes.accountCreation} ${classes.button}`}
+            onClick={() => history.push("/register")}
+          >
+            Create account
+          </Button>
         </Grid>
-        <Grid container item justifyContent="space-around" >
-          <Grid container item justifyContent="center" >
-            <Typography className={classes.welcome} >Welcome back!</Typography>
+        <Grid container item justifyContent="space-around">
+          <Grid container item justifyContent="center">
+            <Typography className={classes.welcome}>Welcome back!</Typography>
           </Grid>
           <form onSubmit={handleLogin}>
-            <Grid container direction="column" justifyContent="center" alignItems="center" >
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+            >
               <FormControl margin="normal" required>
                 <TextField
                   className={classes.textField}
@@ -83,9 +104,9 @@ const Login = (props) => {
                   className={classes.textField}
                   label="Password"
                   aria-label="password"
-                  type={values.showPassword ? "password": "text"}
+                  type={values.showPassword ? "password" : "text"}
                   name="password"
-                  onChange={handleChange('password')}
+                  onChange={handleChange("password")}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
@@ -94,18 +115,33 @@ const Login = (props) => {
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
                         >
-                          {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                          {values.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
                         </IconButton>
                       </InputAdornment>
-                    )
+                    ),
                   }}
                 />
               </FormControl>
-              <Grid container item className={classes.link} justifyContent="flex-end" >
-                <Link >Forgot password?</Link>
+              <Grid
+                container
+                item
+                className={classes.link}
+                justifyContent="flex-end"
+              >
+                <Link>Forgot password?</Link>
               </Grid>
               <Grid>
-                <Button type="submit" className={classes.loginButton} variant="contained" color="primary" size="large">
+                <Button
+                  type="submit"
+                  className={classes.loginButton}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                >
                   Login
                 </Button>
               </Grid>
@@ -113,8 +149,7 @@ const Login = (props) => {
           </form>
         </Grid>
         <Grid>
-          <Box>
-          </Box>
+          <Box></Box>
         </Grid>
       </Grid>
     </Grid>
