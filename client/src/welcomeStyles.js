@@ -27,13 +27,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: ".75em"
   },
   welcome: {
-    marginLeft: "-110px",
+    // marginLeft: "-110px",
     fontSize: "1.25em",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    textAlign: "center"
   },
   loginButton: {
     fontFamily: "Montserrat, sans-serif",
     marginTop: "10px"
+  },
+  header: {
+    alignItems: "baseline",
+    justifyContent: "flex-end"
   }
 }));
 

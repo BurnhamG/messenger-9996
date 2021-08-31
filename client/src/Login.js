@@ -56,10 +56,10 @@ const Login = (props) => {
   return (
     <Grid container className={classes.root}>
       <Grid item xs={3} sm={0}>
-        <WelcomeSideBanner style={{height: "100vh" }} />
+        <WelcomeSideBanner style={{ height: "100vh" }} />
       </Grid>
       <Grid container direction="column" justifyContent="space-around" sm={12} md={9} style={{height: "100vh"}}>
-        <Grid container item alignItems="baseline" justifyContent="flex-end">
+        <Grid container item className={classes.header}>
           <Typography className={classes.accountCreation}>Don't have an account?</Typography>
           <Button variant="contained" size="large" className={`${classes.accountCreation} ${classes.button}`} onClick={() => history.push("/register")}>Create account</Button>
         </Grid>
