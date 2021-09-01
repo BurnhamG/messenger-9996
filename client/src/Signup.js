@@ -54,7 +54,7 @@ const Login = (props) => {
       >
         <Grid container item className={classes.header}>
           <Typography className={classes.accountCreation}>
-            Need to log in?
+            Already have an account?
           </Typography>
           <Button
             variant="contained"
@@ -69,7 +69,7 @@ const Login = (props) => {
           <form onSubmit={handleRegister}>
             <Grid container item justifyContent="flex-start">
               <Typography className={classes.welcome}>
-                Please enter your information.
+                Create an account
               </Typography>
             </Grid>
             <Grid
