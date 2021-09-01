@@ -8,14 +8,11 @@ import {
   Button,
   FormControl,
   TextField,
-  InputAdornment,
-  IconButton,
   Link,
 } from "@material-ui/core";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { login } from "./store/utils/thunkCreators";
 import { WelcomeSideBanner } from "./WelcomeSideBanner.js";
+import { PasswordField } from "./PasswordField.js";
 import "./Login.css";
 import { useStyles } from "./welcomeStyles.js";
 
@@ -23,23 +20,6 @@ const Login = (props) => {
   const history = useHistory();
   const { user, login } = props;
   const classes = useStyles();
-
-  const [values, setValues] = React.useState({
-    password: "",
-    showPassword: false,
-  });
-
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -100,31 +80,7 @@ const Login = (props) => {
                 />
               </FormControl>
               <FormControl margin="normal" required>
-                <TextField
-                  className={classes.textField}
-                  label="Password"
-                  aria-label="password"
-                  type={values.showPassword ? "password" : "text"}
-                  name="password"
-                  onChange={handleChange("password")}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {values.showPassword ? (
-                            <Visibility />
-                          ) : (
-                            <VisibilityOff />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
+                <PasswordField label={"Password"} />
               </FormControl>
               <Grid
                 container
