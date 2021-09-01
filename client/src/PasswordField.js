@@ -41,7 +41,7 @@ export const PasswordField = (props) => {
       className={classes.textField}
       aria-label={toCamelCase(label)}
       label={label}
-      type="password"
+      type={values.showPassword ? "text" : "password"}
       InputProps={{
         minLength: 6,
         endAdornment: (
