@@ -77,6 +77,7 @@ const Login = (props) => {
                   label="Username"
                   name="username"
                   type="text"
+                  required
                 />
               </FormControl>
               <FormControl margin="normal" required>
