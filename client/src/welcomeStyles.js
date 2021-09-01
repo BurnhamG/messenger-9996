@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.info.main,
   },
   button: {
-    background: "#FFFFFF",
+    background: theme.palette.primary.contrastText,
     color: theme.palette.primary.main,
     padding: theme.spacing(1, 2),
   },

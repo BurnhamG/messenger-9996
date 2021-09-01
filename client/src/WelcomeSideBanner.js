@@ -14,13 +14,13 @@ const useStyles = makeStyles((theme) => ({
     width: "425px",
   },
   text: {
-    color: "#FFFFFF",
+    color: theme.palette.primary.contrastText,
     fontSize: "1.75em",
     textAlign: "center",
-    margin: "50px",
+    margin: theme.spacing(5),
   },
   icon: {
-    fontSize: "5rem"
+    fontSize: "5rem",
   },
 }));
 
