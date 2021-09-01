@@ -13,7 +13,6 @@ import {
 import { login } from "./store/utils/thunkCreators";
 import { WelcomeSideBanner } from "./WelcomeSideBanner.js";
 import { PasswordField } from "./PasswordField.js";
-import "./Login.css";
 import { useStyles } from "./welcomeStyles.js";
 
 const Login = (props) => {
