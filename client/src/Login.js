@@ -68,7 +68,7 @@ const Login = (props) => {
               alignItems="center"
             >
               <Grid container item justifyContent="flex-start">
-                <Typography className={classes.welcome}>
+                <Typography className={classes.formHeader}>
                   Welcome back!
                 </Typography>
               </Grid>

@@ -68,7 +68,7 @@ const Login = (props) => {
         <Grid container item justifyContent="space-around">
           <form onSubmit={handleRegister}>
             <Grid container item justifyContent="flex-start">
-              <Typography className={classes.welcome}>
+              <Typography className={classes.formHeader}>
                 Create an account
               </Typography>
             </Grid>

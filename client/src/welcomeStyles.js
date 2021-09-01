@@ -12,29 +12,26 @@ const useStyles = makeStyles((theme) => ({
     width: "30ch",
   },
   accountCreation: {
-    marginRight: "20px",
-    marginTop: "-30px",
-    color: "#777777",
+    marginRight: theme.spacing(2),
+    marginTop: theme.spacing(-3),
+    color: theme.palette.info.main,
   },
   button: {
     background: "#FFFFFF",
-    color: "#3A8DFF",
-    padding: "10px 20px",
-    fontFamily: "Montserrat, sans-serif",
+    color: theme.palette.primary.main,
+    padding: theme.spacing(1, 2),
   },
   link: {
-    margin: "0px 10px 10px",
+    margin: theme.spacing(0, 1, 0),
     fontSize: ".75em",
   },
-  welcome: {
-    // marginLeft: "-110px",
+  formHeader: {
     fontSize: "1.25em",
     fontWeight: "bold",
-    textAlign: "center",
+    textAlign: "left",
   },
   loginButton: {
-    fontFamily: "Montserrat, sans-serif",
-    marginTop: "10px",
+    marginTop: theme.spacing(2),
   },
   header: {
     alignItems: "baseline",
