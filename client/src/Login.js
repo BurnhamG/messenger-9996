@@ -60,9 +60,6 @@ const Login = (props) => {
           </Button>
         </Grid>
         <Grid container item justifyContent="space-around">
-          <Grid container item justifyContent="center">
-            <Typography className={classes.welcome}>Welcome back!</Typography>
-          </Grid>
           <form onSubmit={handleLogin}>
             <Grid
               container
@@ -70,6 +67,11 @@ const Login = (props) => {
               justifyContent="center"
               alignItems="center"
             >
+              <Grid container item justifyContent="flex-start">
+                <Typography className={classes.welcome}>
+                  Welcome back!
+                </Typography>
+              </Grid>
               <FormControl margin="normal" required>
                 <TextField
                   className={classes.textField}

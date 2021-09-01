@@ -66,12 +66,12 @@ const Login = (props) => {
           </Button>
         </Grid>
         <Grid container item justifyContent="space-around">
-          <Grid container item justifyContent="center">
-            <Typography className={classes.welcome}>
-              Please enter your information.
-            </Typography>
-          </Grid>
           <form onSubmit={handleRegister}>
+            <Grid container item justifyContent="flex-start">
+              <Typography className={classes.welcome}>
+                Please enter your information.
+              </Typography>
+            </Grid>
             <Grid
               container
               direction="column"
