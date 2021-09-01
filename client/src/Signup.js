@@ -11,11 +11,14 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
-
+import { WelcomeSideBanner } from "./WelcomeSideBanner.js";
+import { useStyles } from "./welcomeStyles.js";
+import { PasswordField } from "./PasswordField.js";
 const Login = (props) => {
   const history = useHistory();
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
+  const classes = useStyles();
 
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -37,72 +40,100 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to log in?</Typography>
-          <Button onClick={() => history.push("/login")}>Login</Button>
+    <Grid container className={classes.root}>
+      <Grid item xs={3} sm={0}>
+        <WelcomeSideBanner className={classes.fullHeight} />
+      </Grid>
+      <Grid
+        container
+        direction="column"
+        justifyContent="space-around"
+        sm={12}
+        md={9}
+        className={classes.fullHeight}
+      >
+        <Grid container item className={classes.header}>
+          <Typography className={classes.accountCreation}>
+            Already have an account?
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            className={`${classes.accountCreation} ${classes.button}`}
+            onClick={() => history.push("/login")}
+          >
+            Login
+          </Button>
         </Grid>
-        <form onSubmit={handleRegister}>
-          <Grid>
-            <Grid>
-              <FormControl>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                  required
-                />
-              </FormControl>
+        <Grid container item justifyContent="space-around">
+          <form onSubmit={handleRegister}>
+            <Grid container item justifyContent="flex-start">
+              <Typography className={classes.formHeader}>
+                Create an account
+              </Typography>
             </Grid>
-            <Grid>
-              <FormControl>
-                <TextField
-                  label="E-mail address"
-                  aria-label="e-mail address"
-                  type="email"
-                  name="email"
-                  required
-                />
-              </FormControl>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid>
+                <FormControl margin="normal">
+                  <TextField
+                    className={classes.textField}
+                    aria-label="username"
+                    label="Username"
+                    name="username"
+                    type="text"
+                    required
+                  />
+                </FormControl>
+              </Grid>
+              <Grid>
+                <FormControl>
+                  <TextField
+                    className={classes.textField}
+                    label="E-mail address"
+                    aria-label="e-mail address"
+                    type="email"
+                    name="email"
+                    required
+                  />
+                </FormControl>
+              </Grid>
+              <Grid>
+                <FormControl error={!!formErrorMessage.confirmPassword}>
+                  <PasswordField label={"Password"} />
+                  <FormHelperText>
+                    {formErrorMessage.confirmPassword}
+                  </FormHelperText>
+                </FormControl>
+              </Grid>
+              <Grid>
+                <FormControl error={!!formErrorMessage.confirmPassword}>
+                  <PasswordField label={"Confirm Password"} />
+                  <FormHelperText>
+                    {formErrorMessage.confirmPassword}
+                  </FormHelperText>
+                </FormControl>
+              </Grid>
+              <Button
+                type="submit"
+                className={classes.loginButton}
+                variant="contained"
+                color="primary"
+                size="large"
+              >
+                Create
+              </Button>
             </Grid>
-            <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  aria-label="password"
-                  label="Password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="password"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-            <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  label="Confirm Password"
-                  aria-label="confirm password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="confirmPassword"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-            <Button type="submit" variant="contained" size="large">
-              Create
-            </Button>
-          </Grid>
-        </form>
-      </Box>
+          </form>
+        </Grid>
+        <Grid>
+          <Box></Box>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };

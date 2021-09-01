@@ -8,12 +8,17 @@ import {
   Button,
   FormControl,
   TextField,
+  Link,
 } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
+import { WelcomeSideBanner } from "./WelcomeSideBanner.js";
+import { PasswordField } from "./PasswordField.js";
+import { useStyles } from "./welcomeStyles.js";
 
 const Login = (props) => {
   const history = useHistory();
   const { user, login } = props;
+  const classes = useStyles();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -28,40 +33,83 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
+    <Grid container className={classes.root}>
+      <Grid item xs={3} sm={0}>
+        <WelcomeSideBanner className={classes.fullHeight} />
+      </Grid>
+      <Grid
+        container
+        direction="column"
+        justifyContent="space-around"
+        sm={12}
+        md={9}
+        className={classes.fullHeight}
+      >
+        <Grid container item className={classes.header}>
+          <Typography className={classes.accountCreation}>
+            Don't have an account?
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            className={`${classes.accountCreation} ${classes.button}`}
+            onClick={() => history.push("/register")}
+          >
+            Create account
+          </Button>
         </Grid>
-        <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
+        <Grid container item justifyContent="space-around">
+          <form onSubmit={handleLogin}>
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Grid container item justifyContent="flex-start">
+                <Typography className={classes.formHeader}>
+                  Welcome back!
+                </Typography>
+              </Grid>
               <FormControl margin="normal" required>
                 <TextField
+                  className={classes.textField}
                   aria-label="username"
                   label="Username"
                   name="username"
                   type="text"
+                  required
                 />
               </FormControl>
+              <FormControl margin="normal" required>
+                <PasswordField label={"Password"} />
+              </FormControl>
+              <Grid
+                container
+                item
+                className={classes.link}
+                justifyContent="flex-end"
+              >
+                <Link>Forgot password?</Link>
+              </Grid>
+              <Grid>
+                <Button
+                  type="submit"
+                  className={classes.loginButton}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                >
+                  Login
+                </Button>
+              </Grid>
             </Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
-              />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
+          </form>
+        </Grid>
+        <Grid>
+          <Box></Box>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
