@@ -36,7 +36,7 @@ const Login = (props) => {
   return (
     <Grid container className={classes.root}>
       <Grid item xs={3} sm={0}>
-        <WelcomeSideBanner style={{ height: "100vh" }} />
+        <WelcomeSideBanner className={classes.fullHeight} />
       </Grid>
       <Grid
         container
@@ -44,7 +44,7 @@ const Login = (props) => {
         justifyContent="space-around"
         sm={12}
         md={9}
-        style={{ height: "100vh" }}
+        className={classes.fullHeight}
       >
         <Grid container item className={classes.header}>
           <Typography className={classes.accountCreation}>

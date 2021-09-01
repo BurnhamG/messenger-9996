@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "baseline",
     justifyContent: "flex-end",
   },
+  fullHeight: {
+    height: "100vh",
+  },
 }));
 
 export { useStyles };
