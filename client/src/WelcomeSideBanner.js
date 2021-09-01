@@ -1,7 +1,8 @@
 import React from "react";
 import { Hidden, Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import SmsOutlinedIcon from "@material-ui/icons/SmsOutlined";
+import SvgIcon from "@material-ui/core/SvgIcon";
+import { ReactComponent as Bubble } from "./assets/bubble.svg";
 
 import backgroundImage from "./assets/bg-img.png";
 
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     margin: "50px",
   },
+  icon: {
+    fontSize: "5rem"
+  },
 }));
 
 export const WelcomeSideBanner = () => {
@@ -31,7 +35,9 @@ export const WelcomeSideBanner = () => {
         alignItems="center"
         className={classes.root}
       >
-        <SmsOutlinedIcon style={{ color: "white", fontSize: "5em" }} />
+        <SvgIcon className={classes.icon} viewBox="0 0 67 67">
+          <Bubble />
+        </SvgIcon>
         <Typography className={classes.text}>
           Converse with anyone with any language
         </Typography>
