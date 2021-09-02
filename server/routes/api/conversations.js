@@ -67,13 +67,17 @@ router.get("/", async (req, res, next) => {
         convoJSON.otherUser.online = false;
       }
 
-      convoJSON.unreadMessages = convoJSON.messages.filter((message) => !message.isRead).length;
+      convoJSON.unreadMessages = convoJSON.messages.filter(
+        (message) =>
+          !message.isRead && message.senderId === convoJSON.otherUser.id
+      ).length;
 
       // reverse messages so the most recent message is last in the array
       convoJSON.messages.reverse();
 
       // set properties for notification count and latest message preview
-      convoJSON.latestMessageText = convoJSON.messages[convoJSON.messages.length - 1].text;
+      convoJSON.latestMessageText =
+        convoJSON.messages[convoJSON.messages.length - 1].text;
       conversations[i] = convoJSON;
     }
 
@@ -86,38 +90,48 @@ router.get("/", async (req, res, next) => {
 // expects { conversationId, otherUserId } in body
 router.patch("/", async (req, res, next) => {
   try {
-    if (!req.user) {
-      return res.sendStatus(401);
-    }
     const { conversationId, otherUserId } = req.body;
+
     const conversation = await Conversation.findOne({
       where: {
-        id: conversationId
+        id: conversationId,
       },
-      include: [
-        { model: Message },
-      ]
+      include: [{ model: Message }],
+      order: [[Message, "createdAt", "ASC"]],
     });
 
-    const results = [];
-    for (const message of conversation.messages) {
-      const result = await Message.update( {isRead: true }, {
-        where: {
-          id: message.id,
-          senderId: otherUserId
-        }
-      });
-      results.push(result);
+    console.log(conversation.user1Id, conversation.user2Id, otherUserId);
+    if (
+      !req.user ||
+      (conversation.user1Id !== otherUserId &&
+        conversation.user2Id !== otherUserId)
+    ) {
+      return res.sendStatus(401);
     }
 
-    success = results.every(r => r === 1);
+    await Message.update(
+      { isRead: true },
+      {
+        where: {
+          conversationId: conversationId,
+          senderId: otherUserId,
+        },
+      }
+    );
+
+    const user = await User.findOne({
+      where: {
+        id: otherUserId,
+      },
+      attributes: ["id", "username", "photoUrl"],
+    });
+
+    conversation.otherUser = user;
 
     res.json({ conversation });
-
   } catch (error) {
     next(error);
   }
 });
-
 
 module.exports = router;
