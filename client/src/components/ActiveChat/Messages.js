@@ -13,23 +13,13 @@ const useStyles = makeStyles(() => ({
   },
   avatar: {
     width: 20,
-    height: 20
-  }
+    height: 20,
+  },
 }));
-
-const isLastRead = (messages, messageId, userId) => {
-  for (let index = messages.length - 1; index >= 0; index--) {
-    if (messages[index].isRead && messages[index].id === messageId) {
-      return true;
-    } else if (messages[index].isRead) {
-      return false;
-    }
-  };
-};
 
 const Messages = (props) => {
   const classes = useStyles();
-  const { messages, otherUser, userId } = props;
+  const { messages, lastReadMessage, otherUser, userId } = props;
 
   return (
     <Box>
@@ -39,14 +29,23 @@ const Messages = (props) => {
         return message.senderId === userId ? (
           <>
             <SenderBubble key={message.id} text={message.text} time={time} />
-            {isLastRead(messages.filter((message) => message.senderId === userId), message.id, userId) &&
-            <Box className={classes.root}>
-              <Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar} ></Avatar> 
-            </Box>
-            }
+            {lastReadMessage === message.id && (
+              <Box className={classes.root}>
+                <Avatar
+                  alt={otherUser.username}
+                  src={otherUser.photoUrl}
+                  className={classes.avatar}
+                ></Avatar>
+              </Box>
+            )}
           </>
         ) : (
-          <OtherUserBubble key={message.id} text={message.text} time={time} otherUser={otherUser} />
+          <OtherUserBubble
+            key={message.id}
+            text={message.text}
+            time={time}
+            otherUser={otherUser}
+          />
         );
       })}
     </Box>
