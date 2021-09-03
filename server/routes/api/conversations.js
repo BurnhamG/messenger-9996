@@ -99,10 +99,6 @@ router.get("/", async (req, res, next) => {
         convoJSON.messages,
         userId
       );
-      convoJSON.lastReadMessages[userId] = setLastRead(
-        convoJSON.messages,
-        convoJSON.otherUser.id
-      );
 
       // set properties for notification count and latest message preview
       convoJSON.latestMessageText =
@@ -121,14 +117,14 @@ router.patch("/", async (req, res, next) => {
   try {
     const { conversationId, senderId } = req.body;
 
-    let conversation = await fetchConversation(conversationId);
+    let conversation = await Conversation.findByPk(conversationId);
 
     // protect against users that are not part of the conversation
     if (
       !req.user ||
       (conversation.user1Id !== senderId && conversation.user2Id !== senderId)
     ) {
-      return res.sendStatus(401);
+      return res.sendStatus(403);
     }
 
     await Message.update(
