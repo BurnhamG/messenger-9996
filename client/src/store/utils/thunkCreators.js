@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  setMessagesRead,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -97,22 +98,38 @@ export const postMessage = (body) => async (dispatch) => {
   try {
     const data = await saveMessage(body);
 
-      if (!body.conversationId) {
-        dispatch(addConversation(body.recipientId, data.message));
-      } else {
-        dispatch(setNewMessage(data.message));
-      }
-
-      sendMessage(data, body);
-    } catch (error) {
-      console.error(error);
+    if (!body.conversationId) {
+      dispatch(addConversation(body.recipientId, data.message));
+    } else {
+      dispatch(setNewMessage(data.message));
     }
+
+    sendMessage(data, body);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const searchUsers = (searchTerm) => async (dispatch) => {
   try {
     const { data } = await axios.get(`/api/users/${searchTerm}`);
     dispatch(setSearchedUsers(data));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const readMessages = (conversationId, senderId) => async (dispatch) => {
+  try {
+    const { data } = await axios.patch("/api/conversations/", {
+      conversationId: conversationId,
+      senderId: senderId,
+    });
+    dispatch(setMessagesRead(data.conversation, senderId));
+    socket.emit("conversation-read", {
+      conversation: data.conversation,
+      senderId: senderId,
+    });
   } catch (error) {
     console.error(error);
   }

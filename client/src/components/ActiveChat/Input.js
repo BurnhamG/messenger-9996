@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FormControl, FilledInput } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { postMessage } from "../../store/utils/thunkCreators";
+import { postMessage, readMessages } from "../../store/utils/thunkCreators";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -26,6 +26,11 @@ const Input = (props) => {
     setText(event.target.value);
   };
 
+  const handleClick = async (conversationId, otherUserId) => {
+    await props.readMessages(conversationId, otherUserId);
+  }
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
@@ -36,6 +41,7 @@ const Input = (props) => {
       sender: conversationId ? null : user
     };
     await postMessage(reqBody);
+    handleClick(conversationId, otherUser.id);
     setText("");
   };
 
@@ -49,6 +55,7 @@ const Input = (props) => {
           value={text}
           name="text"
           onChange={handleChange}
+          onClick={() => handleClick(conversationId, otherUser.id)}
         />
       </FormControl>
     </form>
@@ -59,6 +66,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     postMessage: (message) => {
       dispatch(postMessage(message));
+    },
+    readMessages : (conversationId, otherUserId) => {
+      dispatch(readMessages(conversationId, otherUserId));
     },
   };
 };
